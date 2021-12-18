@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "@heroku/buildpack-registry": "^1.0.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -29,7 +30,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "engines": {
-    "node": "16.13.0"
+    "node": "16.13.0",
+    "npm": "8.1.0"
   },
   "author": "Prabhjot Singh",
   "license": "ISC"
