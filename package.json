@@ -24,8 +24,9 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "server": "nodemon server.js --ignore client",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
