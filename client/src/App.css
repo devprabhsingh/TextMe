@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+body{
+  max-height: 100vh;
+  position:relative;
+  background-color: rgb(228, 226, 226) !important;
+}
+#guest-btn{
+  display:block;
+  position:absolute;
+  top:100px;
+  right:0;
+  margin:20px;
+}
+#welcome-page h1{
+  font-size: 60px;
+  text-align: center;
+  color:white;
+  padding:10px;
+  background-color: rgb(37, 37, 37);
+}
+
+/* styles for register page*/
+
+#sign-up-btn,
+#sign-in-btn,#guest-btn{
+  border:3px solid rgb(37, 37, 37);
+  background-color:white;
+  color:rgb(37,37,37);
+  font-weight: bold;
+  padding:4px;
+}
+#sign-btns{
+  display: flex;
+  width:100%;
+  justify-content: center;
+}
+#sign-in-btn,#sign-up-btn{
+  width:19.5%;
+  margin-top:15vh;
+  letter-spacing: 1px;
+}
+#sign-in-btn{
+  border-left-width:0px;
+  background-color: gold;
+}
+#sign-in-btn:focus,#sign-up-btn:focus{
+  background-color:gold;
+}
+#sign-up-btn:focus+#sign-in-btn{
+  background-color: white;
+}
+#register-form,#login-form{
+  width: 39%;
+  padding:20px 40px;
+  margin:0 auto 0 auto;
+  position:relative;
+  border:3px solid rgb(37, 37, 37);
+  border-top-width: 0px;
+}
+
+#register-form input,#register-form>div,#login-form>input{
+  width:100%;
+  display:block;
+  outline:none;
+  border:none;
+  padding:5px;
+  font-size:15px;
+  margin:20px 0;
+}
+#register-form input:focus,#login-form input:focus{
+  border:3px solid gold;
+}
+#register-form>p ,#login-form>p{
+  color:red;
+}
+input[type="submit"]{
+  background-color: gold;
+}
+
+
+
+/* styles for header*/
+#nav{
+  height:10vh;
+  background-color:black;
+  color:white;
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#nav h2{
+
+  color:gold;
+}
+#nav p{
+}
+#notification-box span{
+  font-weight: 900;
+}
+#add-contact button,#logout-btn,.dropbtn,
+#edit-profile button{
+  outline:none;
+  padding:3px;
+  color:black;
+  font-weight: 800;
+  background-color: gold;
+  border: 3px solid white;
+}
+.dropbtn{
+  width:110px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  z-index: 1;
+}
+.dropdown-content button {
+  width:110px;
+  color: black;
+  padding:5px 10px;
+  display: block;
+  background-color: gold;
+  border:none;
+}
+.dropdown-content button:hover {
+  background-color: black;
+  color:gold;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#add-contact button:hover,#logout-btn:hover
+,#guest-btn:hover,.dropbtn:hover{
+  background-color:black;
+  color:gold;
+}
+
+#edit-profile{
+  width:fit-content;
+  margin: auto;
+  position:absolute;
+  top:10vh;
+  left:0;
+  right:0;
+  background-color:white;
+  padding:20px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  padding:15px 100px;
+}
+#edit-profile label{
+  width:160px;
+  margin-top: 20px;
+}
+#edit-profile>i{
+  position: absolute;
+  right:20px;
+  font-size: 25px;
+  top:20px;
+  cursor:pointer;
+}
+#edit-profile label img{
+  width:150px;
+  height:150px;
+  border-radius: 50%;
+  cursor:pointer;
+  border:5px solid black;
+}
+#edit-profile label img:focus{
+  border-color: gold !important;
+}
+#edit-profile label input{
+  display: none;
+  width:100%;
+}
+#edit-profile div{
+  width:100%;
+  padding:10px;
+}
+#edit-profile div p{
+  margin-bottom:0;
+}
+#edit-profile div input{
+  border:none;
+  width:fit-content;
+  border-bottom:2px solid black;
+
+}
+#edit-profile div input:focus{
+  outline:none;
+  border-bottom-color: gold;
+}
+#edit-profile div i{
+  margin-left: 10px;
+  padding:10px;
+  border-radius:50%;
+  cursor:pointer;
+}
+#edit-profile div i:hover{
+  background-color: rgb(228, 226, 226);
+}
+#edit-profile button{
+  margin:10px;
+  padding:5px;
+}
+
+/* styles for main element*/
+main{
+  padding:10px;
+  display:flex;
+  justify-content: space-between;
+  width:100%;
+  height:90vh;
+}
+main>p{
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 17px;
+  margin-top:100px;
+}
+
+
+/* styles for users list */
+#users-list{
+  cursor:pointer;
+  width:25%;
+  background-color: white;
+}
+#users-list h2{
+  padding:10px;
+  background-color: gold;
+  text-align: center;
+}
+.list-item{
+  background-color:rgb(228, 226, 226);
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+  border:1px solid white;
+}
+.list-item:hover{
+  background-color: gold;
+}
+.username{
+  font-weight: bold;
+}
+.profile-section >div>.lastMsg{
+  color:rgb(94, 93, 93);
+}
+.profile-section{
+  display: flex;
+  flex:0.7;
+  align-items: center;
+}
+.profile-section img,#chat-room-header img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+.profile-section div{
+  padding:10px;
+}
+
+
+
+/* styles for chat room*/
+#chatroom{
+  background:white;
+  width:74%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+#chat-room-header{
+  width:100%;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  padding:10px;
+}
+#profile{
+  display: flex;
+  align-items: center;
+}
+#profile h3{
+  margin-left:10px;
+}
+
+#chat-room-header #options{
+  display:flex;
+  flex:0.2;
+  align-items:center;
+  justify-content: space-around;
+}
+#chat-room-header #options>i,#chat-room-footer i{
+  padding:15px;
+  height:45px;
+  width:45px;
+  border-radius: 50%;
+}
+#chat-room-header>#options>i:hover,#chat-room-footer i:hover{
+  background:rgb(173, 170, 170);
+}
+
+#message-area{
+  background-color:whitesmoke;
+  height:70vh;
+  width:100%;
+  overflow:scroll;
+}
+#message-area div{
+  width:100%;
+  display:flex;
+}
+#message-area div p{
+  padding:7px 7px;
+  border:1px solid rgb(78, 78, 78);
+  background-color: rgb(189, 186, 186);
+  border-radius:4px;
+  margin:5px 10px;
+}
+.sentMsg{
+  justify-content: flex-end;
+
+}
+.recievedMsg{
+  justify-content: flex-start;
+}
+#message-area p{
+  font-size: 16px;
+}
+#message-area sub{
+  color:rgb(85, 84, 84);
+  margin-left:5px;
+}
+#chat-room-footer{
+  display:flex;
+  justify-content: space-evenly;
+  align-items:center;
+  width:100%;
+  padding:17px;
+}
+#chat-room-footer i{
+  margin:2px;
+}
+#chat-room-footer input{
+  height:40px;
+  width:81%;
+  outline:none;
+  border:none;
+  background-color:rgb(189, 186, 186);
+}
+
+@media only screen and (max-width: 800px) {
+  #users-list{
+    width:40%;
+  }
+  #chatroom{
+    width:59%;
+  }
+}
