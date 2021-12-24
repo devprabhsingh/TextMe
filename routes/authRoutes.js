@@ -12,15 +12,15 @@ router.post('/register',(req,res)=>{
     if(!username || !email || !password){
         return res.status(400).json({msg:"please enter all fields"})
     }
-
+    
     //check for existing user
-    User.findOne({email})
+    User.findOne({email:convertedEmail})
     .then(user=>{
-        if(user)
-        return res.status(400).json({msg:"user already exists"})
+        if(user){
+        return res.status(400).json({msg:"user already exists"})}
 
         const newUser = new User({
-            username,email,password
+            username,email,password,
         })
 
         // create salt and hash
@@ -41,10 +41,10 @@ router.post('/register',(req,res)=>{
                             return res.json({
                                 token,user:{
                                     id:user._id,
-                                    msgs:user.msgs,
-                                    username:user.name,
+                                    username:user.username,
                                     email:user.email,
-                                    about:user.about
+                                    about:user.about,
+                                    profilePic:user.profilePic
                             }            
                         })
                     })
@@ -60,7 +60,8 @@ router.post('/login',(req,res)=>{
 
     const {email,password} = req.body
 
-    User.findOne({email})
+    let convertedEmail = email.toLowerCase()
+    User.findOne({email:convertedEmail})
     .then((user)=>{
         if(!user) return res.status(400).json({msg:"unable to find user with provided email"})
 
@@ -80,7 +81,8 @@ router.post('/login',(req,res)=>{
                            id:user._id,
                            username:user.username,
                            email:user.email,
-                           about:user.about
+                           about:user.about,
+                           profilePic:user.profilePic
                        }
                    })
                }

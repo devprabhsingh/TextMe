@@ -25,11 +25,7 @@ export default class Auth extends Component {
         return (
             <div id="welcome-page">
 
-            <button id="guest-btn">
-                Continue as a guest
-            </button>
-
-            <h1>Text Me</h1>
+            <h1>Interactly</h1>
 
             <div id="sign-btns">
               <button id="sign-up-btn" onClick={this.toggle}>

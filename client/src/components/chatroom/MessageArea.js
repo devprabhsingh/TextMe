@@ -44,6 +44,6 @@ class MessageArea extends Component {
 const mapStateToProps=state=>({
     msgList:state.chat.msgList,
     userLogged:state.auth.user,
-    userInChat:state.user.userInChat
+    userInChat:state.chat.userInChat
 })
 export default connect(mapStateToProps,null)(MessageArea)

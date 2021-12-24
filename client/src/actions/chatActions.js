@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export const setSocket=(socket)=>dispatch=>{
     dispatch({
         type:'SET_SOCKET',
@@ -35,8 +37,51 @@ export const savePeerList=peerList=>dispatch=>{
     })
 }
 
-export const showVideoContainer=()=>dispatch=>{
+export const toggleVideoContainer=(decision,callType)=>dispatch=>{
     dispatch({
-        type:'SHOW_VIDEO_CONTAINER'
+        type:'TOGGLE_VIDEO_CONTAINER',
+        payload:{decision,callType}
+    })
+}
+
+export const toggleChatRoom=(decision)=>dispatch=>{
+    dispatch({
+        type:'TOGGLE_CHAT_ROOM',
+        payload:decision
+    })
+}
+
+export const setUserInChat=(user)=>dispatch=>{
+    dispatch({
+        type:'SET_USER_IN_CHAT',
+        payload:user
+    })
+}
+
+export const getAllUsers=()=>(dispatch,getState)=>{
+
+    const config = {
+        headers:{
+            'x-auth-token':getState().auth.token
+        }
+    }
+    axios.get('/getAllUsers',config)
+    .then(res=>dispatch({
+        type:'GET_USERS_SUCCESS',
+        payload:res.data
+    }))
+    .catch(e=>{
+        dispatch({
+            type:'GET_USERS_FAIL',
+            payload:e.response.data.msg
+        })
+    })
+    
+}
+
+export const saveUsersList=(usersList)=>dispatch=>{
+    dispatch({
+        type:'SAVE_USERSLIST',
+        payload:usersList
     })
 }

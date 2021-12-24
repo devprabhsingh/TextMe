@@ -10,13 +10,10 @@ body{
   position:relative;
   background-color: rgb(228, 226, 226) !important;
 }
-#guest-btn{
-  display:block;
-  position:absolute;
-  top:100px;
-  right:0;
-  margin:20px;
+::placeholder{
+  padding-left: 5px;
 }
+
 #welcome-page h1{
   font-size: 60px;
   text-align: center;
@@ -24,7 +21,6 @@ body{
   padding:10px;
   background-color: rgb(37, 37, 37);
 }
-
 /* styles for register page*/
 
 #sign-up-btn,
@@ -36,8 +32,8 @@ body{
   padding:4px;
 }
 #sign-btns{
-  display: flex;
   width:100%;
+  display: flex;
   justify-content: center;
 }
 #sign-in-btn,#sign-up-btn{
@@ -103,8 +99,7 @@ input[type="submit"]{
 #notification-box span{
   font-weight: 900;
 }
-#add-contact button,#logout-btn,.dropbtn,
-#edit-profile button{
+#logout-btn{
   outline:none;
   padding:3px;
   color:black;
@@ -113,15 +108,25 @@ input[type="submit"]{
   border: 3px solid white;
 }
 .dropbtn{
-  width:110px;
+  width:100%;
 }
-.dropdown-content {
-  display: none;
-  position: absolute;
-  min-width: 160px;
-  z-index: 1;
+.dropbtn img{
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+  margin-right:5px;
 }
-.dropdown-content button {
+.fa-pencil-alt{
+  padding:5px;
+  color:gold;
+  font-size: 20px;
+  border-radius: 50%;
+}
+.fa-pencil-alt:hover{
+  background-color: rgb(51, 51, 51);
+}
+
+#edit-profile button {
   width:110px;
   color: black;
   padding:5px 10px;
@@ -129,17 +134,13 @@ input[type="submit"]{
   background-color: gold;
   border:none;
 }
-.dropdown-content button:hover {
+#edit-profile button:hover {
   background-color: black;
   color:gold;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 #add-contact button:hover,#logout-btn:hover
-,#guest-btn:hover,.dropbtn:hover{
+,#guest-btn:hover{
   background-color:black;
   color:gold;
 }
@@ -157,6 +158,7 @@ input[type="submit"]{
   flex-direction: column;
   align-items: center;
   padding:15px 100px;
+  z-index:2;
 }
 #edit-profile label{
   width:160px;
@@ -362,12 +364,117 @@ main>p{
   border:none;
   background-color:rgb(189, 186, 186);
 }
+#chat-room-footer i,#chat-room-header i{
+  font-size:20px;
+  height:fit-content !important;
+  width: fit-content !important;
+}
 
-@media only screen and (max-width: 800px) {
+#video-container{
+  position: relative;
+  width: 100%;
+  height:100%;
+}
+#pos-abs-box{
+  padding:30px;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+#user-profile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#user-profile img{
+  height:60px;
+  width:60px;
+  border-radius:50%;
+  border:2px solid gold;
+}
+#user-profile p{
+  padding:10px;
+  font-size: 18px;
+}
+#call-buttons{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+#call-buttons div{
+  display: inline-block;
+  width:fit-content;
+  padding:10px 15px;
+  margin:0 10px;
+  color:gold;
+  font-size: 18px;
+  cursor:pointer;
+  background-color: red;
+}
+#call-buttons div:first-child{
+  background-color: green;
+}
+#myvideo{
+  width:100%;
+  height:100%;
+}
+@media only screen and (max-width: 600px) {
+  #sign-in-btn,#sign-up-btn{
+    width:47%;
+  }
+  #register-form,#login-form{
+    width:94%;
+  }
+  #edit-profile{
+    width:100%;
+    padding:15px 20px;
+  }
+  #edit-profile div{
+    width:85%;
+    padding-left:35px;
+  }
+
   #users-list{
-    width:40%;
+    width:100%;
   }
   #chatroom{
-    width:59%;
+    width:100%;
   }
+  main>p{
+    display:none;
+  }
+  main{
+    padding:0;
+  }
+  .list-item{
+    padding-left:10px;
+    justify-content: flex-start;
+  }
+  .fa-angle-left{
+    padding:4px;
+    border-radius: 50%;
+  }
+  .fa-angle-left:hover{
+    background-color: rgb(189, 186, 186);
+  }
+  #chat-room-footer{
+    padding:5px;
+  }
+ 
+  #chat-room-footer i,#chat-room-header i{
+    font-size:25px;
+  }
+  #chat-room-footer input{
+    width:max-content;
+  }
+  
 }

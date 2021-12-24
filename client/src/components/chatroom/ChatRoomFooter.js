@@ -82,7 +82,7 @@ class ChatRoomFooter extends Component {
 }
 const mapStateToProps = state=>({
     sender:state.auth.user,
-    reciever:state.user.userInChat.email,
-    cUsersList:state.user.cUsersList
+    reciever:state.chat.userInChat.email,
+    cUsersList:state.chat.cUsersList
 })
 export default connect(mapStateToProps,{sendMsg})(ChatRoomFooter)

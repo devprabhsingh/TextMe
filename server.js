@@ -7,7 +7,6 @@ const upload = require('express-fileupload');
 const {ExpressPeerServer} = require('peer')
 const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
-const searchRoutes = require('./routes/searchRoutes')
 require('dotenv').config()
 
 
@@ -89,7 +88,6 @@ mongoose
   
 
 app.use('/auth',authRoutes)
-app.use('/search',searchRoutes)
 app.use('/',userRoutes)
 
 

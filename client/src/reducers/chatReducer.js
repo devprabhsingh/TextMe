@@ -3,7 +3,13 @@ const initialState= {
     socket:{},
     peer:null,
     peerList:[],
-    showVideo:false
+    showVideo:false,
+    showChatRoom:false,
+    usersList:[],
+    error:'',
+    userInChat:{},
+    cUsersList:[],
+    callType:''
 }
 
 const chatReducer = (state=initialState,action)=>{
@@ -34,11 +40,44 @@ const chatReducer = (state=initialState,action)=>{
                 ...state,
                 peerList:action.payload
             }
-        case 'SHOW_VIDEO_CONTAINER':
+        case 'TOGGLE_VIDEO_CONTAINER':
             return{
                 ...state,
-                showVideo:true
+                showVideo:action.payload.decision,
+                callType:action.payload.callType
             }
+        case 'TOGGLE_CHAT_ROOM':
+            return{
+                ...state,
+                showChatRoom:action.payload
+            }
+        case 'SET_USER_IN_CHAT':
+            return{
+                ...state,
+                userInChat:action.payload
+            }
+            case 'GET_USERS_SUCCESS':
+                return{
+                    ...state,
+                    usersList:action.payload
+                }
+            case 'GET_USERS_FAIL':
+                return{
+                    ...state,
+                    usersList:[],
+                    error:action.payload
+                }
+            case 'SAVE_USERSLIST':
+                return{
+                    ...state,
+                    cUsersList:action.payload
+                }  
+        case 'SAVE_CALLER_ID':{
+            return{
+                ...state,
+                callerId:action.payload
+            }
+        }
         default:
             return{
                 ...state

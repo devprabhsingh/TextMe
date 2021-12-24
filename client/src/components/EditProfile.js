@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
+import {compressedFile} from '../utils/commonUtils'
+import {loadUser} from '../actions/authActions'
 
 class EditProfile extends Component {
     state={
@@ -9,9 +11,7 @@ class EditProfile extends Component {
         username:this.props.user.username,
         email:this.props.user.email,
         password:'*******',
-        profilePic:this.props.user.profilePic,
-        profilePicType:this.props.user.profilePicType,
-        newProfilePic:null,
+        uploadedFile:'https://muscathome.com/uploads/profile_images/default.png',
         msg:''
     }
 
@@ -21,6 +21,12 @@ class EditProfile extends Component {
                 about:""
             })
         }
+        if(this.props.user.profilePic!==undefined){
+            this.setState({
+                uploadedFile:this.props.user.profilePic
+            })
+        }
+
     }
     onChange=(e)=>{
         this.setState({
@@ -35,16 +41,23 @@ class EditProfile extends Component {
         e.target.parentElement.children[1].focus()
     }
 
-    saveChanges=()=>{
+    saveChanges= async ()=>{
         const {user} = this.props
         if((user.username!==this.state.username ||
             user.about!==this.state.about) ||
-            user.email!==this.state.email){
-        const formData = new FormData()
+            (user.email!==this.state.email ||
+            this.state.file!=='')){
+        
+            const formData = new FormData()
+            const uploadedImg = await compressedFile()
+            this.setState({
+                uploadedFile:uploadedImg
+            })
+           
+        formData.append('profilePhoto',uploadedImg)
         formData.append('about',this.state.about)
         formData.append('username',this.state.username)
         formData.append('email',this.state.email)
-        formData.append('profilePhoto',this.state.newProfilePic)
 
         axios.post('/saveProfileChanges',formData, {
             headers:{
@@ -54,11 +67,12 @@ class EditProfile extends Component {
         .then(res=>{
            this.setState({
                msg:res.data.msg
-           })
+           },()=>{
+               this.props.loadUser()})
         })
         .catch(e=>{
             this.setState({
-                msg:e.response.msg
+                msg:e.response.data.msg
             })
         })
     }
@@ -72,7 +86,7 @@ class EditProfile extends Component {
 
     handlePhoto=(e)=>{
         this.setState({
-            newProfilePic: URL.createObjectURL(e.target.files[0]),
+            uploadedFile:URL.createObjectURL(e.target.files[0])
         })
     }
 
@@ -81,18 +95,10 @@ class EditProfile extends Component {
     }
 
     render() {
-        let src=''
-        if(this.state.profilePic){
-        const profileImg = (this.state.profilePic).toString('base64')
-        src = !this.state.newProfilePic?
-        `data:image/${this.state.profilePicType};base64,${profileImg}`
-        :this.state.newProfilePic
+         let uploadedSrc=''
+        if(this.state.uploadedFile!==undefined){
+            uploadedSrc =this.state.uploadedFile
         }
-        else{
-            src="https://media.istockphoto.com/vectors/person-icon-flat-black-round-button-vector-illustration-vector-id1139505484?k=20&m=1139505484&s=170667a&w=0&h=uVTD_s2EnF35J7s0-4M-G3lcHbIVfmCAlu_y-jinq2c="
-        }
-
-
         return (
             <div id="edit-profile">
                 <i className="fas fa-times"
@@ -102,7 +108,8 @@ class EditProfile extends Component {
                     accept=".png,.jpg,.jpeg"
                     id="profileImgInput"
                     onChange={this.handlePhoto}/>
-                    <img src={src}/>
+
+                    <img id="uploadedPic" alt="userPic" src={uploadedSrc}/>
                 </label>
                 <div>
                 <p>About</p>
@@ -154,4 +161,4 @@ class EditProfile extends Component {
 const mapStateToProps=(state)=>({
     token:state.auth.token
 })
-export default connect(mapStateToProps,null)(EditProfile)
+export default connect(mapStateToProps,{loadUser})(EditProfile)

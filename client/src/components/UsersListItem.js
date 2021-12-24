@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Fragment } from 'react'
-import {showUser} from '../actions/userActions'
+import {toggleChatRoom,setUserInChat} from '../actions/chatActions'
 import {connect} from 'react-redux'
 
 function UsersListItem(props){
@@ -15,7 +15,8 @@ function UsersListItem(props){
       },[props])
 
     const onClick=()=>{
-        props.showUser(props.user)
+        props.setUserInChat(props.user)
+        props.toggleChatRoom(true)
     }
         
         return (
@@ -23,7 +24,9 @@ function UsersListItem(props){
             <div className="list-item"
                 onClick={onClick}>
                <div className="profile-section">
-                    <img alt="img" src="https://dsx.weather.com/util/image/w/en-ca-waterfrontdec28.jpg?v=at&w=485&h=273&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0"/>
+                    <img alt="img" src={props.user.profilePic?
+                        props.user.profilePic:
+                        'https://muscathome.com/uploads/profile_images/default.png'}/>
                     <div>
                        <span className="username">{props.user.username}</span><br/>
                       
@@ -40,4 +43,4 @@ function UsersListItem(props){
     }
 
 
-export default connect(null,{showUser})(UsersListItem)
+export default connect(null,{toggleChatRoom,setUserInChat})(UsersListItem)

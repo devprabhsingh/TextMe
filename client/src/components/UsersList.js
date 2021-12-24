@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UsersListItem from './UsersListItem'
 import {connect} from 'react-redux'
-import {getAllUsers} from '../actions/userActions'
+import {getAllUsers} from '../actions/chatActions'
 
 class UsersList extends Component {
 
@@ -30,9 +30,9 @@ class UsersList extends Component {
 
 const mapStateToProps=(state)=>({
     userLogged:state.auth.user,
-    usersList:state.user.usersList,
-    error:state.user.error,
-    cUsersList:state.user.cUsersList
+    usersList:state.chat.usersList,
+    error:state.chat.error,
+    cUsersList:state.chat.cUsersList
 })
 
 export default connect(mapStateToProps,{getAllUsers})(UsersList)

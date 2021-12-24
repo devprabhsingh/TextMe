@@ -1,19 +1,97 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
+import {addVideo} from '../utils/commonUtils'
+import {toggleChatRoom,toggleVideoContainer} from '../actions/chatActions'
+let myStream = ''
 class Video extends React.Component{
 
+    async componentDidMount(){
+
+        await navigator.mediaDevices.getUserMedia({
+            audio: true,video: true,})
+            .then((stream) => {
+                myStream=stream
+            })
+            .catch(e=>console.log(e))
+
+        if(window.innerWidth<600){
+            document.getElementById('users-list').style.display="none"
+        }
+        if(this.props.callType==='outgoing'){
+
+            const [user] = this.props.peerList.filter(user=>user.email===this.props.userInChat.email)
+            if(myStream.getVideoTracks().length > 0 && myStream.getAudioTracks().length > 0){
+                        
+                addVideo(myStream,true)
+                //making video call to other user
+                const call = this.props.peer.call(user.peerId,myStream)
+                this.setState({
+                    call
+                })
+                call.on('stream',(userVideoStream)=>{
+                    addVideo(userVideoStream,false)
+                })
+            }
+        }
+    }
+
+    answerCall=()=>{
+            addVideo(myStream,true)
+            this.props.call.answer(myStream)
+            this.props.call.on("stream", (userVideoStream) => {
+                addVideo(userVideoStream,false)
+            })
+    }
+
+    getStream=()=>{    
+       
+        }
+
+    endCall=()=>{
+        console.log('hangup')
+
+        myStream.getTracks().forEach(track => track.stop());  
+        this.props.peer.destroy()
+        this.props.toggleVideoContainer(false,'')
+        this.props.toggleChatRoom(true)
+        
+    }
     render(){
+        let user = this.props.userInChat
+        if(this.props.callType==='incoming'){
+        const [caller] = this.props.peerList.filter(peer=>peer.peerId===this.props.call.peer)
+        const callingUser = this.props.usersList.filter(user=>user.email===caller.email)
+        user = callingUser[0]
+        }
         return(
             <div id="video-container">
-                calling{this.props.userInChat.username}
+               <div id="pos-abs-box">
+               <div id="user-profile">
+                   <img alt="profilepic" src={user.profilePic}/>
+                   <p>{user.username}</p>
+               </div>
+
+                <div id="call-buttons">
+                    {this.props.callType==='incoming'?
+                    <div
+                    onClick={this.answerCall}>
+                    Answer</div>:''}
+
+                    <div
+                    onClick={this.endCall}>
+                    Hang Up</div>
+                </div>
+               </div>
             </div>
         )
     }
 }
 const mapStateToProps=state=>({
-    userInChat:state.user.userInChat,
-    
+    usersList:state.chat.usersList,
+    peerList:state.chat.peerList,
+    userInChat:state.chat.userInChat,
+    callType:state.chat.callType,
+    peer:state.chat.peer
 })
 
-export default connect(mapStateToProps,null)(Video)
+export default connect(mapStateToProps,{toggleChatRoom,toggleVideoContainer})(Video)

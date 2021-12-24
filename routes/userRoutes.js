@@ -22,16 +22,14 @@ router.get('/getAllUsers',auth,(req,res)=>{
 })
 
 router.post('/saveProfileChanges',auth,(req,res)=>{
-    const {about,username,email} = req.body
+    const {about,username,email,profilePhoto} = req.body
+
     User.findById(req.user.id)
     .then(user=>{
         user.about=about
         user.username=username
         user.email=email
-        if(req.files!==null){
-        user.profilePic=req.files.profilePhoto.data
-        user.profilePicType=req.files.profilePhoto.mimetype
-        }
+        user.profilePic=profilePhoto
 
         const saved = user.save()
         if(saved) return res.json({msg:'Changes saved successfully!'})
@@ -40,6 +38,5 @@ router.post('/saveProfileChanges',auth,(req,res)=>{
         return res.status(500).json({msg:'Changes not saved, please try later'})
     })
 
-    
 })
 module.exports = router
