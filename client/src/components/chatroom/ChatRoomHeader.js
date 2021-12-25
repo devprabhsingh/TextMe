@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {toggleChatRoom,toggleVideoContainer} from '../../actions/chatActions'
-import { addVideo } from '../../utils/commonUtils'
 
 class ChatRoomHeader extends Component {
 
