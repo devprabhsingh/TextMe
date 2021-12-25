@@ -18,15 +18,13 @@ class Video extends React.Component{
             .then((myStream) => {
                this.setState({
                    myStream
-               },()=>{
+               })
                 addVideo(myStream,true)
                 //making video call to other user
                 const call = this.props.peer.call(user.peerId,myStream)
                 call.on('stream',(userVideoStream)=>{
                     addVideo(userVideoStream,false)
                 })
-               })
-                
             })
             .catch(e=>console.log(e))
         }
