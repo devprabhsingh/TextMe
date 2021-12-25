@@ -41,7 +41,7 @@ class Video extends React.Component{
                    this.setState({
                        myStream
                    })
-                   addVideo(this.state.myStream,true)
+                   addVideo(myStream,true)
                 })
         }
         }
