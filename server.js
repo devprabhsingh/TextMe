@@ -4,7 +4,7 @@ const socketio = require('socket.io')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const upload = require('express-fileupload');
-const {ExpressPeerServer} = require('peer')
+const {ExpressPeerServer} = require('peerjs')
 const authRoutes = require('./routes/authRoutes')
 const userRoutes = require('./routes/userRoutes')
 require('dotenv').config()
