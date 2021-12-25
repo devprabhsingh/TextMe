@@ -2,55 +2,59 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addVideo} from '../utils/commonUtils'
 import {toggleChatRoom,toggleVideoContainer} from '../actions/chatActions'
-let myStream = ''
+
 class Video extends React.Component{
+
+    state={
+        myStream:null
+    }
 
     async componentDidMount(){
 
-        await navigator.mediaDevices.getUserMedia({
-            audio: true,video: true,})
-            .then((stream) => {
-                myStream=stream
-            })
-            .catch(e=>console.log(e))
-
-        if(window.innerWidth<600){
-            document.getElementById('users-list').style.display="none"
-        }
         if(this.props.callType==='outgoing'){
-
-            const [user] = this.props.peerList.filter(user=>user.email===this.props.userInChat.email)
-            if(myStream.getVideoTracks().length > 0 && myStream.getAudioTracks().length > 0){
-                        
+        const [user] = this.props.peerList.filter(user=>user.email===this.props.userInChat.email)
+        navigator.mediaDevices.getUserMedia({
+            audio: true,video: true,})
+            .then((myStream) => {
+               this.setState({
+                   myStream
+               })
                 addVideo(myStream,true)
                 //making video call to other user
                 const call = this.props.peer.call(user.peerId,myStream)
-                this.setState({
-                    call
-                })
                 call.on('stream',(userVideoStream)=>{
                     addVideo(userVideoStream,false)
                 })
-            }
+            })
+            .catch(e=>console.log(e))
         }
-    }
+
+        if(window.innerWidth<600){
+            document.getElementById('users-list').style.display="none"
+        }   
+
+        if(this.props.callType==='incoming'){
+
+            navigator.mediaDevices.getUserMedia({
+                audio: true,video: true,})
+                .then((myStream) => {
+                   this.setState({
+                       myStream
+                   })
+                   addVideo(this.state.myStream,true)
+                })
+        }
+        }
 
     answerCall=()=>{
-            addVideo(myStream,true)
-            this.props.call.answer(myStream)
+            this.props.call.answer(this.state.myStream)
             this.props.call.on("stream", (userVideoStream) => {
                 addVideo(userVideoStream,false)
             })
     }
 
-    getStream=()=>{    
-       
-        }
-
     endCall=()=>{
-        console.log('hangup')
-
-        myStream.getTracks().forEach(track => track.stop());  
+        this.state.myStream.getTracks().forEach(track => track.stop());  
         this.props.peer.destroy()
         this.props.toggleVideoContainer(false,'')
         this.props.toggleChatRoom(true)

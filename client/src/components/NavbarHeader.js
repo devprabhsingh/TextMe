@@ -40,7 +40,6 @@ class NavbarHeader extends Component {
     }
     
     render() {
-      console.log(this.props.user)
       const {username} = this.props.user
         return (
           <Fragment>
