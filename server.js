@@ -49,6 +49,9 @@ io.on('connection',socket=>{
     socket.broadcast.to(msg.recieverId).emit('message',msg)
   })
 
+  socket.on('enableVideo',(enableVideo,id)=>[
+    socket.broadcast.to(id).emit('isEnableVideo',enableVideo)
+  ])
   socket.on('newConn',(peerId,email)=>{
     console.log('new peer conn')
     peerList.push({

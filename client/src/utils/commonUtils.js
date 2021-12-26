@@ -1,4 +1,8 @@
-export const addVideo=(stream,isMuted)=>{
+
+export const insertToDom=(stream,isMuted,enableVideo)=>{
+  const videoBox = document.getElementById('video-container')
+
+   if(enableVideo){
     const video = document.createElement("video")
     video.muted = isMuted
     if(isMuted)
@@ -8,8 +12,23 @@ export const addVideo=(stream,isMuted)=>{
     video.srcObject=stream
     video.addEventListener("loadedmetadata", () => {
         video.play()
-        document.getElementById('video-container').append(video);
+        videoBox.append(video)
       })
+      if(video.id==="otheruservideo"){
+        video.style.height='50%'
+        document.getElementById('myvideo').style.height='50%'
+      }
+
+   }else{
+    console.log(stream)
+     const audio = document.createElement('audio')
+     audio.muted=isMuted
+     audio.srcObject= stream
+     audio.addEventListener('loadedmetadata',()=>{
+       audio.play()
+       videoBox.append(audio)
+     })
+   }
 }
 
 export const compressedFile= async (file)=>{

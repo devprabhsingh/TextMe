@@ -108,7 +108,8 @@ input[type="submit"]{
   border: 3px solid white;
 }
 .dropbtn{
-  width:100%;
+  display:flex;
+  align-items: center;
 }
 .dropbtn img{
   width:50px;
@@ -117,7 +118,7 @@ input[type="submit"]{
   margin-right:5px;
 }
 .fa-pencil-alt{
-  padding:5px;
+  padding:10px;
   color:gold;
   font-size: 20px;
   border-radius: 50%;
@@ -302,7 +303,7 @@ main>p{
 
 #chat-room-header #options{
   display:flex;
-  flex:0.2;
+  flex:0.25;
   align-items:center;
   justify-content: space-around;
 }
@@ -315,7 +316,20 @@ main>p{
 #chat-room-header>#options>i:hover,#chat-room-footer i:hover{
   background:rgb(173, 170, 170);
 }
-
+#options .fa-ellipsis-v,.fa-microphone{
+  padding:15px 20px !important;
+}
+.fa-ellipsis-v+p{
+  display:none;
+  position:absolute;
+  right:20px;
+  top:150px;
+  background:rgb(173, 170, 170);
+  padding:5px;
+}
+.fa-ellipsis-v:hover+p{
+  display:block;
+}
 #message-area{
   background-color:whitesmoke;
   height:70vh;
@@ -369,7 +383,15 @@ main>p{
   height:fit-content !important;
   width: fit-content !important;
 }
-
+.emoji-picker{
+  height:40vh;
+}
+.emoji-list{
+  padding-top:0;
+}
+.emoji-picker #search-input{
+  display: none;
+}
 #video-container{
   position: relative;
   width: 100%;
@@ -471,7 +493,7 @@ main>p{
   }
  
   #chat-room-footer i,#chat-room-header i{
-    font-size:25px;
+    font-size:20px;
   }
   #chat-room-footer input{
     width:max-content;

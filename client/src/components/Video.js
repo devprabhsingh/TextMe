@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addVideo} from '../utils/commonUtils'
-import {toggleChatRoom,toggleVideoContainer} from '../actions/chatActions'
+import {insertToDom} from '../utils/commonUtils'
+import {setUserInChat,toggleChatRoom,toggleVideoContainer} from '../actions/chatActions'
 
 class Video extends React.Component{
 
@@ -10,20 +10,27 @@ class Video extends React.Component{
     }
 
     componentDidMount(){
-
         if(this.props.callType==='outgoing'){
+
+        const {enableVideo} = this.props
+        const [cUser] = this.props.cUsersList.filter(user=>user.email===this.props.userInChat.email)
+        this.props.socket.emit('enableVideo',this.props.enableVideo,cUser.id)
+
         const [user] = this.props.peerList.filter(user=>user.email===this.props.userInChat.email)
+
         navigator.mediaDevices.getUserMedia({
-            audio: true,video: true,})
+            audio: true,video: enableVideo})
             .then((myStream) => {
+          
                this.setState({
                    myStream
                })
-                addVideo(myStream,true)
+                insertToDom(myStream,true,enableVideo)
+
                 //making video call to other user
                 const call = this.props.peer.call(user.peerId,myStream)
                 call.on('stream',(userVideoStream)=>{
-                    addVideo(userVideoStream,false)
+                    insertToDom(userVideoStream,false,enableVideo)
                 })
             })
             .catch(e=>console.log(e))
@@ -36,12 +43,12 @@ class Video extends React.Component{
         if(this.props.callType==='incoming'){
 
             navigator.mediaDevices.getUserMedia({
-                audio: true,video: true,})
+                audio: true,video: this.props.enableVideo})
                 .then((myStream) => {
                    this.setState({
                        myStream
                    })
-                   addVideo(myStream,true)
+                   insertToDom(myStream,true,this.props.enableVideo)
                 })
         }
         }
@@ -49,7 +56,10 @@ class Video extends React.Component{
     answerCall=()=>{
             this.props.call.answer(this.state.myStream)
             this.props.call.on("stream", (userVideoStream) => {
-                addVideo(userVideoStream,false)
+                const child = document.getElementById('otheruservideo')
+                if(!document.getElementById('video-container').contains(child)){
+                insertToDom(userVideoStream,false,this.props.enableVideo)
+                }
             })
     }
 
@@ -57,6 +67,7 @@ class Video extends React.Component{
         this.state.myStream.getTracks().forEach(track => track.stop());  
         this.props.peer.destroy()
         this.props.toggleVideoContainer(false,'')
+        this.props.setUserInChat(this.props.userInChat)
         this.props.toggleChatRoom(true)
         
     }
@@ -92,10 +103,13 @@ class Video extends React.Component{
 }
 const mapStateToProps=state=>({
     usersList:state.chat.usersList,
+    cUsersList:state.chat.cUsersList,
     peerList:state.chat.peerList,
     userInChat:state.chat.userInChat,
     callType:state.chat.callType,
-    peer:state.chat.peer
+    peer:state.chat.peer,
+    socket:state.chat.socket,
+    enableVideo:state.chat.enableVideo
 })
 
-export default connect(mapStateToProps,{toggleChatRoom,toggleVideoContainer})(Video)
+export default connect(mapStateToProps,{toggleChatRoom,toggleVideoContainer,setUserInChat})(Video)

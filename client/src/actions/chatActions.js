@@ -37,10 +37,10 @@ export const savePeerList=peerList=>dispatch=>{
     })
 }
 
-export const toggleVideoContainer=(decision,callType)=>dispatch=>{
+export const toggleVideoContainer=(decision,callType,enableVideo)=>dispatch=>{
     dispatch({
         type:'TOGGLE_VIDEO_CONTAINER',
-        payload:{decision,callType}
+        payload:{decision,callType,enableVideo}
     })
 }
 

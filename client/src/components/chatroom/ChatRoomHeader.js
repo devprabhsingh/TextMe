@@ -5,13 +5,21 @@ import {toggleChatRoom,toggleVideoContainer} from '../../actions/chatActions'
 class ChatRoomHeader extends Component {
 
     state={
-        showBackButton:false
+        showBackButton:false,
+        online:false
     }
     componentDidMount(){
         if(window.innerWidth<600){
             this.setState({
                 showBackButton:true
             })   
+        }
+
+        const [user] = this.props.peerList.filter(user=>user.email===this.props.userInChat.email)
+        if(user){
+            this.setState({
+                online:true
+            })
         }
     }
 
@@ -20,22 +28,14 @@ class ChatRoomHeader extends Component {
         this.props.toggleChatRoom(false)
     }
 
-    doVideoCall=()=>{
-        const user = this.props.peerList.filter(user=>user.email===this.props.userInChat.email)
-        // if user means user is in current users list means online
-        if(user.length!==0){
-
-            //show videocall component
-            this.props.toggleVideoContainer(true,'outgoing')
+    doCall=(video)=>{
+        if(this.state.online){
+            this.props.toggleVideoContainer(true,'outgoing',video)
             this.props.toggleChatRoom(false)
-
-          
-        
-        }else alert(`${this.props.userInChat.username} is not online`)
-        
+        }else alert(`${this.props.userInChat.username} is not online`)   
     }
+
     render() {
-        const username = this.props.userInChat? this.props.userInChat.username:'username'
         return (
             <div 
             id="chat-room-header">
@@ -43,15 +43,17 @@ class ChatRoomHeader extends Component {
                     {this.state.showBackButton?
                     <i className="fas fa-angle-left"
                        onClick={this.goBack}></i>:''}
-                    <img alt="img" src="https://dsx.weather.com/util/image/w/en-ca-waterfrontdec28.jpg?v=at&w=485&h=273&api=7db9fe61-7414-47b5-9871-e17d87b8b6a0"/>
-                    <h3>{username}</h3>
+                    <img alt="img" src={this.props.userInChat.profilePic}/>
+                    <h3>{this.props.userInChat.username}</h3>
                 </div>
                 <div id="options">
-                <i className="fas fa-phone-alt"></i>
+                <i className="fas fa-phone-alt"
+                onClick={()=>{this.doCall(false)}}></i>
                 <i 
-                onClick={this.doVideoCall}
+                onClick={()=>{this.doCall(true)}}
                 className="fas fa-video"></i>
                 <i className="fas fa-ellipsis-v"></i>
+                <p>I hope you like it</p>
                 </div>
             </div>
         )

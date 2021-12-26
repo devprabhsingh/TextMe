@@ -9,7 +9,8 @@ const initialState= {
     error:'',
     userInChat:{},
     cUsersList:[],
-    callType:''
+    callType:'',
+    enableVideo:false
 }
 
 const chatReducer = (state=initialState,action)=>{
@@ -44,7 +45,9 @@ const chatReducer = (state=initialState,action)=>{
             return{
                 ...state,
                 showVideo:action.payload.decision,
-                callType:action.payload.callType
+                callType:action.payload.callType,
+                enableVideo:action.payload.video
+
             }
         case 'TOGGLE_CHAT_ROOM':
             return{

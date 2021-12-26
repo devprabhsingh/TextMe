@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import {sendMsg} from '../../actions/chatActions'
+import EmojiPicker from "react-emoji-search"
 
 class ChatRoomFooter extends Component {
     state={
-        text:''
+        text:'',
+        showEmoji:false
     }
 
     componentDidMount(){
@@ -23,6 +25,7 @@ class ChatRoomFooter extends Component {
     }
 
     submitMsg=()=>{
+        this.toggleEmojiBox()
         if(this.state.text!==''){
             const msg = this.state.text
             const {email,username} = this.props.sender
@@ -61,10 +64,24 @@ class ChatRoomFooter extends Component {
         else
             alert('please type something')
     }
+
+    toggleEmojiBox=()=>{
+        this.setState({
+            showEmoji:!this.state.showEmoji
+        })
+    }
+
+    addEmoji=(emoji)=>{
+        this.setState({
+            text:this.state.text+emoji
+        })
+    }
     render() {
         return (
-            <div id="chat-room-footer">          
-                    <i className="far fa-smile"></i>
+            <Fragment>
+            <div id="chat-room-footer">  
+                <i className='far fa-smile'
+                onClick={this.toggleEmojiBox}></i>     
                     <input 
                     placeholder="Type your message.."
                     type="text"
@@ -77,6 +94,12 @@ class ChatRoomFooter extends Component {
                     onClick={this.submitMsg}></i>
                     <i className="fas fa-microphone"></i> 
             </div>
+             {this.state.showEmoji?   
+                <EmojiPicker
+                onEmojiClick={(emoji)=>{
+                    this.addEmoji(emoji)
+                }}/>:''}
+                </Fragment>
         )
     }
 }

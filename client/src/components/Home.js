@@ -13,7 +13,8 @@ import {addMsg,setSocket,savePeer,savePeerList,toggleVideoContainer,
 class Home extends Component{
 
     state={
-        call:null
+        call:null,
+        enableVideo:false
     }
 
     componentDidMount(){
@@ -30,7 +31,7 @@ class Home extends Component{
             const peer = new Peer(undefined,{
                 path:"/peerjs",
                 host:"/",
-                port:""
+                port:"5000"
             })
             this.props.savePeer(peer)
     
@@ -43,15 +44,20 @@ class Home extends Component{
             socket.on('peerList',(peerList)=>{
               this.props.savePeerList(peerList)
             })
+
+            socket.on('isEnableVideo',enablevideo=>[
+                this.setState({
+                    enablevideo
+                })
+            ])
     
             //listening to call from server 
             peer.on("call", (call) => {  
             this.setState({
                 call
             })
-            this.props.toggleVideoContainer(true,'incoming')
+            this.props.toggleVideoContainer(true,'incoming',this.state.enableVideo)
             this.props.toggleChatRoom(false) 
-            
         })
 
     }
