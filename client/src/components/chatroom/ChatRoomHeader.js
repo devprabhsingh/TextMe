@@ -33,7 +33,6 @@ class ChatRoomHeader extends Component {
     }
 
     doCall=(video)=>{
-        console.log(video)
         if(this.state.online){
             this.props.toggleVideoContainer(true,'outgoing',video)
             this.props.toggleChatRoom(false)
