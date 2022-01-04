@@ -25,7 +25,7 @@ class ChatRoomFooter extends Component {
     }
 
     submitMsg=()=>{
-        this.toggleEmojiBox()
+        this.toggleEmojiBox(false)
         if(this.state.text!==''){
             const msg = this.state.text
             const {email,username} = this.props.sender
@@ -65,10 +65,17 @@ class ChatRoomFooter extends Component {
             alert('please type something')
     }
 
-    toggleEmojiBox=()=>{
-        this.setState({
-            showEmoji:!this.state.showEmoji
-        })
+    toggleEmojiBox=(choice)=>{
+        if (choice!==''){
+            this.setState({
+                showEmoji:choice
+            })
+        }else{
+            this.setState({
+                showEmoji:!this.state.showEmoji
+            })
+        }
+       
     }
 
     addEmoji=(emoji)=>{
@@ -92,7 +99,6 @@ class ChatRoomFooter extends Component {
                     <i 
                     className="fas fa-paper-plane"
                     onClick={this.submitMsg}></i>
-                    <i className="fas fa-microphone"></i> 
             </div>
              {this.state.showEmoji?   
                 <EmojiPicker

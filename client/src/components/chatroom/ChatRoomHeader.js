@@ -23,12 +23,17 @@ class ChatRoomHeader extends Component {
         }
     }
 
+    alertUser=()=>{
+        alert('This feature is in development')
+    }
+
     goBack=()=>{
         document.getElementById('users-list').style.display="block"
         this.props.toggleChatRoom(false)
     }
 
     doCall=(video)=>{
+        console.log(video)
         if(this.state.online){
             this.props.toggleVideoContainer(true,'outgoing',video)
             this.props.toggleChatRoom(false)
@@ -50,7 +55,7 @@ class ChatRoomHeader extends Component {
                 <i className="fas fa-phone-alt"
                 onClick={()=>{this.doCall(false)}}></i>
                 <i 
-                onClick={()=>{this.doCall(true)}}
+                onClick={this.alertUser}
                 className="fas fa-video"></i>
                 <i className="fas fa-ellipsis-v"></i>
                 <p>I hope you like it</p>

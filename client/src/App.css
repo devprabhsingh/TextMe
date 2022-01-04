@@ -91,8 +91,8 @@ input[type="submit"]{
   align-items: center;
 }
 #nav h2{
-
   color:gold;
+  font-size: 30px;
 }
 #nav p{
 }
@@ -467,6 +467,9 @@ main>p{
 
   #users-list{
     width:100%;
+  }
+  #nav h2{
+    font-size: 24px;
   }
   #chatroom{
     width:100%;

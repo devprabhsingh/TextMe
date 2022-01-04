@@ -46,7 +46,7 @@ const chatReducer = (state=initialState,action)=>{
                 ...state,
                 showVideo:action.payload.decision,
                 callType:action.payload.callType,
-                enableVideo:action.payload.video
+                enableVideo:action.payload.enableVideo
 
             }
         case 'TOGGLE_CHAT_ROOM':

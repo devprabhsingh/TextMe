@@ -31,7 +31,7 @@ class Home extends Component{
             const peer = new Peer(undefined,{
                 path:"/peerjs",
                 host:"/",
-                port:""
+                port:"5000"
             })
             this.props.savePeer(peer)
     

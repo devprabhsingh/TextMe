@@ -6,7 +6,8 @@ import {setUserInChat,toggleChatRoom,toggleVideoContainer} from '../actions/chat
 class Video extends React.Component{
 
     state={
-        myStream:null
+        myStream:null,
+        call:null
     }
 
     componentDidMount(){
@@ -29,6 +30,9 @@ class Video extends React.Component{
 
                 //making video call to other user
                 const call = this.props.peer.call(user.peerId,myStream)
+                this.setState({
+                    call
+                })
                 call.on('stream',(userVideoStream)=>{
                     insertToDom(userVideoStream,false,enableVideo)
                 })
@@ -64,11 +68,15 @@ class Video extends React.Component{
     }
 
     endCall=()=>{
+        console.log(this.state.call)
+        console.log(this.props.call)
         this.state.myStream.getTracks().forEach(track => track.stop());  
-        this.props.peer.destroy()
+        this.props.callType==='outgoing'?this.state.call.close():this.props.call.close()
         this.props.toggleVideoContainer(false,'')
-        this.props.setUserInChat(this.props.userInChat)
-        this.props.toggleChatRoom(true)
+        if(this.props.callType==='outgoing')
+            this.props.toggleChatRoom(true)
+        if(this.props.callType==='incoming')
+        document.getElementById('users-list').style.display="block"
         
     }
     render(){
